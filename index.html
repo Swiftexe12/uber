@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride Timer</title>
+    <style>
+        #stopButton {
+            display: none;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Ride Timer</h1>
+        <button id="startButton">Start Ride</button>
+        <button id="stopButton">Stop Ride</button>
+        <span id="trip"></span>
+        <p id="timer"><span id="min">00</span><span>:</span><span id="sec">00</span></p>
+
+        <p id="1price">Amount per minute is 800 naira</p>
+        <p>Amount:<span id="2price">0</span></p>
+        <p>Tax: <span id="3price">0</span></p>
+        <p>Amount to pay: <span id="4price">0</span></p>
+        <span id="trip" style="color:red"></span>
+    </div>
+    <script>
+        let minn = document.getElementById('min');
+        let secc = document.getElementById('sec');
+        let startt = document.getElementById('startButton');
+        let stopp = document.getElementById('stopButton');
+        let p1 = document.getElementById('2price');
+        let p2 = document.getElementById('3price');
+        let p3 = document.getElementById('4price');
+        let stopengine;
+        let ccc = 0;
+        let k;
+        let min1;
+
+        function engine() {
+            ++ccc;
+            let min1 = parseInt(ccc / 60);
+            let sec1 = ccc % 60;
+            min1 = (min1 < 10) ? "0" + min1 : min1;
+            sec1 = (sec1 < 10) ? "0" + sec1 : sec1;
+            minn.innerHTML = min1;
+            secc.innerHTML = sec1;
+            function calc() {
+
+            }
+        };
+        function count() {
+            k = setInterval(engine, 1000);
+        }
+        function startengine() {
+            count();
+            startt.style.display = "none";
+            stopp.style.display = "inline";
+        }
+        stopengine = function () {
+            clearInterval(k);
+            startt.style.display = "none";
+            stopp.style.display = "none";
+            document.getElementById('trip').innerHTML = 'Trip successful';
+            let one = (800 * minn.innerHTML) + Math.floor((secc.innerHTML / 60) * 800);
+            p1.innerHTML = one + 'naira';
+            let two = (2 / 100) * (one);
+            p2.innerHTML = two + '%';
+            let three = one - two;
+            p3.innerHTML = three + 'naira';
+        }
+        startt.addEventListener('click', startengine);
+        stopp.addEventListener('click', stopengine);
+    </script>
+</body>
+
+</html>
