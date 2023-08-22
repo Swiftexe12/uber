@@ -82,11 +82,11 @@
             stopp.style.display = "none";
             document.getElementById('trip').innerHTML = 'Trip successful';
             let one = (800 * minn.innerHTML) + Math.floor((secc.innerHTML / 60) * 800);
-            p1.innerHTML = one + '' + '₦';
+            p1.innerHTML = '₦'+ ' ' + one ;
             let two = (2 / 100) * (one);
-            p2.innerHTML = two +  '' +  '₦';
+            p2.innerHTML =  '₦'+ ' ' +two;
             let three = one - two;
-            p3.innerHTML = three + '' +  '₦';
+            p3.innerHTML = '₦'+ ' ' + three;
         }
         startt.addEventListener('click', startengine);
         stopp.addEventListener('click', stopengine);
