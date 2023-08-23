@@ -45,7 +45,7 @@
 
         <p id="1price">Amount per minute is 800 naira</p>
         <p>Amount:<span id="2price">0</span></p>
-        <p>Tax: <span id="3price">0</span></p>
+        <p>Tax(%): <span id="3price">0</span></p>
         <p>Amount to pay: <span id="4price">0</span></p>
         <span id="trip" style="color:red"></span>
     </div>
@@ -92,7 +92,7 @@
             let one = (800 * minn.innerHTML) + Math.floor((secc.innerHTML / 60) * 800);
             p1.innerHTML = one + 'naira';
             let two = (2 / 100) * (one);
-            p2.innerHTML = two + '%';
+            p2.innerHTML = two + 'naira';
             let three = one - two;
             p3.innerHTML = three + 'naira';
         }
