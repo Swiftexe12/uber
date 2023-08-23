@@ -4,16 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <title>Ride Timer</title>
     <style>
         #stopButton {
             display: none;
         }
 
-        #newButton {
+        #receipt {
             display: none;
         }
 
+        #timer {
+            display: none;
+        }
 
         body {
             font-family: Arial, sans-serif;
@@ -23,6 +28,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            text-align: center;
         }
 
         .container {
@@ -30,38 +36,80 @@
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            width: 50%;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Ride Timer</h1>
-        <button id="startButton">Start Ride</button>
-        <button id="stopButton">Stop Ride</button>
-        <button id="newButton">reset Ride</button><br><br>
-        <span id="trip" style="color: red;"></span>
-        <p id="timer"><span id="min">00</span><span>:</span><span id="sec">00</span></p>
+        <h1>BOOKING</h1>
 
-        <p id="1price">Amount per minute is 800 naira</p>
-        <p>Amount:<span id="2price">0</span></p>
-        <p>Tax(2%): <span id="3price">0</span></p>
-        <p>Amount to pay: <span id="4price">0</span></p>
-        <span id="trip" style="color:red"></span>
+        <div id="destina">
+            <!-- <input type="text" placeholder="pick up point" id="from">
+            <input type="text" placeholder="your destination" id="to"> -->
+            <div class="row g-3">
+                <div class="col-lg-6 col-sm-12">
+                    <input type="text" class="form-control" placeholder="pick up point" id="from">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="your destination" id="to">
+                </div>
+            </div>
+        </div>
+        <br>
+        <button id="startButton" class="btn btn-primary">Start Ride</button>
+        <span id="trip1"
+            style="text-align: center; font-size: 25px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;"></span>
+        <p id="timer"
+            style="text-align: center; font-size: 50px; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
+
+            <span id="min">00</span><span>:</span><span id="sec">00</span>
+        </p>
+        <button id="stopButton" class="btn btn-danger mb-3">Stop Ride</button>
+        <div id="receipt" style="color: red;">
+            <h1>Your receipt</h1>
+            <p>Destination:<span>from </span><span id="fro1"></span><span> to</span><span id="fro2"></span></p>
+            <p id="1price">Amount per minute is 800 naira</p>
+            <div style=" display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;">
+                <span>Amount:</span><span id="2price" style="text-align: right;
+                font-weight: bold;
+                font-size: 18px;">0</span>
+            </div>
+            <div style=" display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;"> <span>Tax: </span><span id="3price" style="text-align: right;
+            font-weight: bold;
+            font-size: 18px;">0</span></div>
+            <p style="text-align: right;
+            font-weight: bold;
+            font-size: 18px;">Amount to pay: <span id="4price">0</span></p>
+        </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
     <script>
+        let timerr = document.getElementById('timer');
+        let destin = document.getElementById('destina');
         let minn = document.getElementById('min');
         let secc = document.getElementById('sec');
         let startt = document.getElementById('startButton');
         let stopp = document.getElementById('stopButton');
-        let neww = document.getElementById('newButton');
         let p1 = document.getElementById('2price');
         let p2 = document.getElementById('3price');
         let p3 = document.getElementById('4price');
+        let fromm = document.getElementById('from');
+        let too = document.getElementById('to');
+        let rece = document.getElementById('receipt');
+
         let stopengine;
         let ccc = 0;
         let k;
         let min1;
+        let tt2;
 
         function engine() {
             ++ccc;
@@ -81,37 +129,31 @@
         function startengine() {
             count();
             startt.style.display = "none";
+            timerr.style.display = "block";
             stopp.style.display = "inline";
+            destin.style.display = "none";
+            document.getElementById('trip1').innerHTML = `Your destination from ${fromm.value} to ${too.value} is on going`;
         }
         stopengine = function () {
             clearInterval(k);
             startt.style.display = "none";
             stopp.style.display = "none";
-            neww.style.display = "inline";
-            document.getElementById('trip').innerHTML = 'Trip successful';
+            rece.style.display = "inline";
+            destin.style.display = "none";
+            timerr.style.display = "none";
+            document.getElementById('trip1').innerHTML = `Your destination from ${fromm.value} to ${too.value} was successful Here is the receipt`;
+
+            document.getElementById('fro1').innerHTML = `${fromm.value}`;
+            document.getElementById('fro2').innerHTML = `  ${too.value}`;
             let one = (800 * minn.innerHTML) + Math.floor((secc.innerHTML / 60) * 800);
             p1.innerHTML = one + 'naira';
             let two = (2 / 100) * (one);
-            p2.innerHTML = two + 'naira';
+            p2.innerHTML = two + '%';
             let three = one - two;
-            p3.innerHTML = three + 'naira';
-        }
-        function newengine() {
-            clearInterval(k);
-            neww.style.display = "none";
-            ccc = 0;
-            document.getElementById('trip').innerHTML = ' ';
-            document.getElementById('min').innerHTML = '00';
-            document.getElementById('sec').innerHTML = '00';
-            document.getElementById('2price').innerHTML = '0';
-            document.getElementById('3price').innerHTML = '0';
-            document.getElementById('4price').innerHTML = '0';
-            startt.style.display = "inline";
-            startt.innerHTML = 'START AGAIN';
+            p3.innerHTML = three + ' ' + 'Naira';
         }
         startt.addEventListener('click', startengine);
         stopp.addEventListener('click', stopengine);
-        neww.addEventListener('click', newengine);
     </script>
 </body>
 
